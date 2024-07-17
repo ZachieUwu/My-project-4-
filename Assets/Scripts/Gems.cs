@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Gems : MonoBehaviour
 {
-    public AudioSource wrongGem;
     public bool isWrongGem;
+    public AudioClip wrongGemClip;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,15 +16,16 @@ public class Gems : MonoBehaviour
             {
                 if (isWrongGem)
                 {
-                    if (wrongGem != null && wrongGem.clip != null)
+                    AudioSource playerAudioSource = other.GetComponent<AudioSource>();
+                    if (playerAudioSource != null && wrongGemClip != null)
                     {
-                        wrongGem.Play();
+                        playerAudioSource.PlayOneShot(wrongGemClip);
                     }
                 }
+
                 else
                 {
                     pc.score += 1;
-                    Destroy(gameObject);
                 }
 
                 Destroy(gameObject);
